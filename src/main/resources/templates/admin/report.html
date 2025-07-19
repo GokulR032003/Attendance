@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Attendance Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2>Attendance Report</h2>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Student Name</th>
+            <th>Roll Number</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.name}" rowspan="${#lists.size(attendanceMap[student.id])}"></td>
+            <td th:text="${student.rollNumber}" rowspan="${#lists.size(attendanceMap[student.id])}"></td>
+            <td th:each="att : ${attendanceMap[student.id]}">
+                <span th:text="${att.date}">Date</span>
+            </td>
+            <td th:each="att : ${attendanceMap[student.id]}">
+                <span th:text="${att.present} ? 'Present' : 'Absent'">Status</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
