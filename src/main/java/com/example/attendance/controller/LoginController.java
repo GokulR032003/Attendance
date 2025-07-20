@@ -1,4 +1,3 @@
-// LoginController.java
 package com.example.attendance.controller;
 
 import com.example.attendance.entity.User;
@@ -15,11 +14,7 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/")
-    public String redirectToLogin() {
-        return "redirect:/login";
-    }
-
+    // Show login page
     @GetMapping("/login")
     public String showLoginForm() {
         return "login";
@@ -40,7 +35,7 @@ public class LoginController {
         }
 
         // ✅ Save username in session
-        session.setAttribute("loggedInUsername", user.getUsername());
+        session.setAttribute("username", user.getUsername());
 
         if ("ADMIN".equalsIgnoreCase(user.getRole())) {
             return "redirect:/admin/dashboard";

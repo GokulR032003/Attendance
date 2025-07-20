@@ -4,6 +4,18 @@ import jakarta.persistence.*;
 
 @Entity
 public class Student {
+    @Id
+    private Long id; // Same as user ID for 1-to-1 mapping
+
+    private String name;
+    private String department;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
+    private User user;
+
+    // Getters and setters
 
     public Long getId() {
         return id;
@@ -21,8 +33,6 @@ public class Student {
         this.name = name;
     }
 
-
-
     public String getDepartment() {
         return department;
     }
@@ -30,21 +40,6 @@ public class Student {
     public void setDepartment(String department) {
         this.department = department;
     }
-    public String getRollNumber() {
-        return rollNumber;
-    }
-
-    public void setRollNumber(String rollNumber) {
-        this.rollNumber = rollNumber;
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-    private String rollNumber;
-    private String department;
 
     public User getUser() {
         return user;
@@ -53,10 +48,4 @@ public class Student {
     public void setUser(User user) {
         this.user = user;
     }
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    // Getters and Setters
 }

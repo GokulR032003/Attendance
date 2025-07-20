@@ -1,4 +1,5 @@
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Add Student</title>
@@ -7,17 +8,23 @@
 <body>
 <div class="container mt-5">
     <h2>Add Student</h2>
+
+    <!-- Display error message if exists -->
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
     <form action="/admin/add-student" method="post">
-        <div class="mb-3">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-        </div>
-        <div class="mb-3">
-            <label for="rollNumber" class="form-label">Roll Number</label>
-            <input type="text" class="form-control" id="rollNumber" name="rollNumber" required>
-        </div>
-        <button type="submit" class="btn btn-success">Add Student</button>
+        <label for="name">Name:</label>
+        <input type="text" name="name" id="name" required />
+
+        <label for="department">Department:</label>
+        <input type="text" name="department" id="department" required />
+
+        <label for="username">Linked Username:</label>
+        <input type="text" name="username" id="username" required />
+
+        <button type="submit">Add Student</button>
     </form>
+
 </div>
 </body>
 </html>

@@ -3,26 +3,29 @@ package com.example.attendance.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users") // lowercase and plural
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public String getRole() {
-        return role;
+    @Column(unique = true)
+    private String username;
+
+    private String password;
+    private String role;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Student student;
+
+    // Getters and setters
+
+    public Long getId() {
+        return id;
     }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -33,17 +36,21 @@ public class User {
         this.username = username;
     }
 
-    public Long getId() {
-        return id;
+    public String getPassword() {
+        return password;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    private String username;
-    private String password;
-    private String role;
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public Student getStudent() {
         return student;
@@ -52,7 +59,4 @@ public class User {
     public void setStudent(Student student) {
         this.student = student;
     }
-    @OneToOne(mappedBy = "user")
-    private Student student;
 }
-

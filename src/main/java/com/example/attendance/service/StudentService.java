@@ -20,13 +20,26 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public void saveStudent(Student student) {
-        studentRepository.save(student);
+    public Student saveNewStudent(User user, String name, String department) {
+        if (user == null || user.getId() == null) {
+            throw new IllegalArgumentException("User must not be null and must have an ID.");
+        }
+
+        Student student = new Student();
+        student.setId(user.getId());         // ID must match user ID due to @MapsId
+        student.setUser(user);               // Set linked user
+        student.setName(name);               // Set name
+        student.setDepartment(department);   // Set department
+
+        return studentRepository.save(student); // Save and return the persisted student
     }
+
     public Student getStudentById(Long studentId) {
         return studentRepository.findById(studentId).orElse(null);
     }
     public Student getStudentByUser(User user) {
+
         return studentRepository.findByUser(user);
+
     }
 }

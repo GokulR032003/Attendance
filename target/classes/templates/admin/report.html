@@ -20,7 +20,6 @@
         <tbody>
         <tr th:each="student : ${students}">
             <td th:text="${student.name}" rowspan="${#lists.size(attendanceMap[student.id])}"></td>
-            <td th:text="${student.rollNumber}" rowspan="${#lists.size(attendanceMap[student.id])}"></td>
             <td th:each="att : ${attendanceMap[student.id]}">
                 <span th:text="${att.date}">Date</span>
             </td>

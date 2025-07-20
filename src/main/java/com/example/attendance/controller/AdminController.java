@@ -4,6 +4,7 @@ package com.example.attendance.controller;
 import com.example.attendance.entity.Attendance;
 import com.example.attendance.entity.Student;
 import com.example.attendance.entity.User;
+import com.example.attendance.repository.StudentRepository;
 import com.example.attendance.service.AttendanceService;
 import com.example.attendance.service.StudentService;
 import com.example.attendance.service.UserService;
@@ -30,6 +31,8 @@ public class AdminController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private StudentRepository studentRepository;
 
     // Dashboard
     @GetMapping("/dashboard")
@@ -46,10 +49,28 @@ public class AdminController {
 
     // Save new student (POST)
     @PostMapping("/add-student")
-    public String addStudent(@ModelAttribute Student student) {
-        studentService.saveStudent(student);
-        return "redirect:/admin/student";
+    public String addStudent(@RequestParam String username, @RequestParam String name,
+                             @RequestParam String department, Model model) {
+
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            model.addAttribute("error", "User not found.");
+            return "admin/add-student";
+        }
+
+        if (studentService.getStudentByUser(user) != null) {
+            model.addAttribute("error", "Student already exists for this user.");
+            return "admin/add-student";
+        }
+
+        studentService.saveNewStudent(user, name, department);
+        return "redirect:/admin/students";
     }
+
+
+
+
+
 
     // Manage Students page (matches /admin/student)
     @GetMapping("/student")

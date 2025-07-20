@@ -19,7 +19,6 @@
             <tbody>
             <tr th:each="student : ${students}">
                 <td th:text="${student.name}"></td>
-                <td th:text="${student.rollNumber}"></td>
                 <td>
                     <select class="form-select" th:name="${student.id}">
                         <option value="present">Present</option>
